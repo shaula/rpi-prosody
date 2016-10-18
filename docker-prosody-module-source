@@ -1,0 +1,39 @@
+#!/bin/sh
+set -e
+
+dir=$2
+
+usage() {
+  echo "usage: $0 COMMAND DIR"
+  echo
+  echo "Manage prosody-modules source lifecycle."
+  echo
+  echo "Commands:"
+  echo "   pullTo     extract prosody-module sources into directory ${dir} if not already done."
+  echo "   deleteFrom delete extracted prosody-module sources located into ${dir} if not already done."
+  echo
+}
+
+case "$1" in
+  pullTo)
+    mkdir -p "${dir}"
+
+    if [ ! -f "${dir}/.docker-pulled" ]; then
+      wget https://hg.prosody.im/prosody-modules/archive/tip.tar.gz
+      tar -xzf tip.tar.gz -C "${dir}" --strip-components=1
+      rm tip.tar.gz
+      touch "${dir}/.docker-pulled"
+    fi
+
+    ;;
+
+  deleteFrom)
+    rm -rf "${dir}"
+
+    ;;
+
+  *)
+    usage
+    exit 1
+    ;;
+esac
