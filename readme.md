@@ -60,7 +60,7 @@ version: '2'
 
 services:
   server:
-    image: shaula/rpi-prosody:0.9.10
+    image: shaula/rpi-prosody:0.9.11
     ports:
       - "5000:5000"
       - "5222:5222"

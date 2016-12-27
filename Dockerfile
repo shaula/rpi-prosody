@@ -16,16 +16,16 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-ENV PROSODY_VERSION 0.9.10
+ENV PROSODY_VERSION 0.9.11
 ENV PROSODY_DOWNLOAD_URL https://prosody.im/downloads/source/prosody-${PROSODY_VERSION}.tar.gz
-ENV PROSODY_DOWNLOAD_SHA1 572b3dc6f29cb304cc7d4c5a2ef570cf0638fe63
+ENV PROSODY_DOWNLOAD_SHA1 1cd50597a166300af06654f6c75dd38e296b7d83
 
 RUN buildDeps='gcc libc6-dev make liblua5.1-dev libidn11-dev libssl-dev' \
  && set -x \
  && apt-get update && apt-get install -y $buildDeps --no-install-recommends \
  && rm -rf /var/lib/apt/lists/* \
- && wget -O prosody.tar.gz "$PROSODY_DOWNLOAD_URL" \
- && echo "$PROSODY_DOWNLOAD_SHA1 *prosody.tar.gz" | sha1sum -c - \
+ && wget -O prosody.tar.gz "${PROSODY_DOWNLOAD_URL}" \
+ && echo "${PROSODY_DOWNLOAD_SHA1} *prosody.tar.gz" | sha1sum -c - \
  && mkdir -p /usr/src/prosody \
  && tar -xzf prosody.tar.gz -C /usr/src/prosody --strip-components=1 \
  && rm prosody.tar.gz \
