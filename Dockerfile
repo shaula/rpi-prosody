@@ -4,6 +4,7 @@ RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       libevent-dev \
       lua5.1 \
+      lua-bitop \
       lua-dbi-sqlite3 \
       lua-dbi-mysql \
       lua-dbi-postgresql \
@@ -16,9 +17,9 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-ENV PROSODY_VERSION 0.9.12
+ENV PROSODY_VERSION 0.10.0
 ENV PROSODY_DOWNLOAD_URL https://prosody.im/downloads/source/prosody-${PROSODY_VERSION}.tar.gz
-ENV PROSODY_DOWNLOAD_SHA1 1ee224263a5b3d67960e12edbbe6b2f16b95d147
+ENV PROSODY_DOWNLOAD_SHA1 57c1c5a665e6453bdde06727ef398cd69accd9d7
 
 RUN buildDeps='gcc libc6-dev make liblua5.1-dev libidn11-dev libssl-dev' \
  && set -x \
@@ -58,7 +59,6 @@ RUN docker-prosody-module-install \
         e2e_policy `# require end-2-end encryption` \
         filter_chatstates `# disable "X is typing" type messages` \
         http_upload `# file sharing (XEP-0363)` \
-        mam `# message archive management (XEP-0313)` \
         smacks `# stream management (XEP-0198)` \
         throttle_presence `# presence throttling in CSI`
 

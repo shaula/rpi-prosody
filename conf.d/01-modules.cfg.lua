@@ -9,11 +9,11 @@ modules_enabled = {
     "disco"; -- Service discovery
 
     -- Not essential, but recommended
+    "blocklist"; -- simple modern protocol for blocking remote JIDs (XEP-0191)
     "private"; -- Private XML storage (for room bookmarks, etc.)
     "vcard"; -- Allow users to set vCards
 
     -- These are commented by default as they have a performance impact
-    "privacy"; -- Support privacy lists
     --"compression"; -- Stream compression (Debian: requires lua-zlib module to work)
 
     -- Nice to have
