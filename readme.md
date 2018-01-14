@@ -18,6 +18,7 @@ While Conversations got everything set-up out-of-the-box, Gajim was used with th
   * SQLite message store 
   * Configured file upload and image sharing
 * Allows registration
+* Multi-user chats
 
 ## Requirements
 
@@ -60,7 +61,7 @@ version: '2'
 
 services:
   server:
-    image: shaula/rpi-prosody:0.9.11
+    image: shaula/rpi-prosody:0.10
     ports:
       - "5000:5000"
       - "5222:5222"
@@ -105,7 +106,3 @@ log = {
 };
 ```
 
-## Missing
-
-* [Multi-User-Chats](https://prosody.im/doc/modules/mod_muc) (MUC) is not yet configured
-* ??

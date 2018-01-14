@@ -16,3 +16,9 @@ Component ("proxy." .. domain) "proxy65"
 -- Set up a http file upload because proxy65 is not working in muc
 -- Component (domain) "http_upload"
 -- is set-up via modules_enabled
+
+Component ("muc." .. domain) "muc"
+	name = "Prosody Chatrooms"
+	restrict_room_creation = false
+	max_history_messages = 20
+
