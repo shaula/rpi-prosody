@@ -14,3 +14,4 @@ storage = {
 
 -- https://modules.prosody.im/mod_mam.html
 archive_expires_after = "1y"
+

@@ -2,38 +2,50 @@ FROM resin/rpi-raspbian
 
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-      libevent-dev \
-      lua5.1 \
+      libevent-dev `# this is no build dependency, but needed for luaevent` \
+      lua5.2 \
       lua-bitop \
-      lua-dbi-sqlite3 \
-      lua-dbi-mysql \
-      lua-dbi-postgresql \
-      lua-event \
       lua-expat \
       lua-filesystem \
       lua-socket \
       lua-sec \
+      sqlite3 \
       wget \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-ENV PROSODY_VERSION 0.10.2
+ENV PROSODY_VERSION 0.11.0
 ENV PROSODY_DOWNLOAD_URL https://prosody.im/downloads/source/prosody-${PROSODY_VERSION}.tar.gz
-ENV PROSODY_DOWNLOAD_SHA1 1d51e542475c3f3e712eace29537b042c941d6ab
+ENV PROSODY_DOWNLOAD_SHA1 044dcaf89c55a1c3a37eda77872bd70cd86da865
 
-RUN buildDeps='gcc libc6-dev make liblua5.1-dev libidn11-dev libssl-dev' \
+RUN buildDeps='gcc git libc6-dev libidn11-dev liblua5.2-dev libsqlite3-dev libssl-dev make unzip' \
  && set -x \
  && apt-get update && apt-get install -y $buildDeps --no-install-recommends \
  && rm -rf /var/lib/apt/lists/* \
+ \
  && wget -O prosody.tar.gz "${PROSODY_DOWNLOAD_URL}" \
  && echo "${PROSODY_DOWNLOAD_SHA1} *prosody.tar.gz" | sha1sum -c - \
  && mkdir -p /usr/src/prosody \
  && tar -xzf prosody.tar.gz -C /usr/src/prosody --strip-components=1 \
  && rm prosody.tar.gz \
- && cd /usr/src/prosody && ./configure --ostype=debian \
+ && cd /usr/src/prosody && ./configure \
  && make -C /usr/src/prosody \
  && make -C /usr/src/prosody install \
- && rm -r /usr/src/prosody \
+ && cd / && rm -r /usr/src/prosody \
+ \
+ && mkdir /usr/src/luarocks \
+ && cd /usr/src/luarocks \
+ && wget https://luarocks.org/releases/luarocks-3.0.4.tar.gz \
+ && tar zxpf luarocks-3.0.4.tar.gz \
+ && cd luarocks-3.0.4 \
+ && ./configure \
+ && sudo make bootstrap \
+ && cd / && rm -r /usr/src/luarocks \
+ \
+ && luarocks install luaevent \
+ && luarocks install luadbi \
+ && luarocks install luadbi-sqlite3 \
+ \
  && apt-get purge -y --auto-remove $buildDeps
 
 EXPOSE 5000 5222 5269 5347 5280 5281
@@ -66,3 +78,4 @@ USER prosody
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["prosody"]
+

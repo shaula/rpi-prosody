@@ -9,12 +9,13 @@ modules_enabled = {
     "disco"; -- Service discovery
 
     -- Not essential, but recommended
-    "blocklist"; -- simple modern protocol for blocking remote JIDs (XEP-0191)
+    "blocklist"; -- Simple modern protocol for blocking remote JIDs (XEP-0191)
     "private"; -- Private XML storage (for room bookmarks, etc.)
-    "vcard"; -- Allow users to set vCards
-
-    -- These are commented by default as they have a performance impact
-    --"compression"; -- Stream compression (Debian: requires lua-zlib module to work)
+    "vcard4"; -- Allow users to set vCards
+    "vcard_legacy"; -- Support older clients
+    "mam"; -- Message Archive (XEP-0313)
+    "carbons"; -- Share and sync conversations (XEP-0280)
+    "csi_simple"; -- Buffer unimportant traffic for simple optimisation for clients using state indication
 
     -- Nice to have
     "version"; -- Replies to server version requests

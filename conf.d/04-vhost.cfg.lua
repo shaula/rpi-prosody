@@ -21,4 +21,7 @@ Component ("muc." .. domain) "muc"
 	name = "Prosody Chatrooms"
 	restrict_room_creation = false
 	max_history_messages = 20
+	modules_enabled = {
+		"muc_mam";
+	}
 

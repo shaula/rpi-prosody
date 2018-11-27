@@ -105,4 +105,12 @@ log = {
     {levels = {min = "debug"}, to = "console"};
 };
 ```
+### Upgrade
+
+When migrating from 0.10, you need to update the database once:
+
+```bash
+docker-compose exec server bash
+prosodyctl mod_storage_sql upgrade
+```
 
