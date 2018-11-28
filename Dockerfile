@@ -14,9 +14,9 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-ENV PROSODY_VERSION 0.11.0
+ENV PROSODY_VERSION 0.11.1
 ENV PROSODY_DOWNLOAD_URL https://prosody.im/downloads/source/prosody-${PROSODY_VERSION}.tar.gz
-ENV PROSODY_DOWNLOAD_SHA1 044dcaf89c55a1c3a37eda77872bd70cd86da865
+ENV PROSODY_DOWNLOAD_SHA1 dacce98fda317f5ba3c05842e2d97018d050b435
 
 RUN buildDeps='gcc git libc6-dev libidn11-dev liblua5.2-dev libsqlite3-dev libssl-dev make unzip' \
  && set -x \
