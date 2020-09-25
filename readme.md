@@ -61,14 +61,14 @@ version: '2'
 
 services:
   server:
-    image: shaula/rpi-prosody:0.10
+    image: shaula/rpi-prosody:0.11.6
     ports:
       - "5000:5000"
       - "5222:5222"
       - "5269:5269"
       - "5281:5281"
     environment:
-      DOMAIN: your.domain.com
+      - DOMAIN=your.domain.com
     volumes:
       - ./privkey.pem:/usr/local/etc/prosody/certs/prosody.key
       - ./fullchain.pem:/usr/local/etc/prosody/certs/prosody.crt

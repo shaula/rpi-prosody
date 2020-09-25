@@ -31,6 +31,7 @@ modules_enabled = {
     --"admin_telnet"; -- Opens telnet console interface on localhost port 5582
 
     -- HTTP modules
+    --"http_upload_external"; -- Recommended way to upload files (increases limit beyond 1MB in group chats)
     --"bosh"; -- Enable BOSH clients, aka "Jabber over HTTP"
     --"http_files"; -- Serve static files from a directory over HTTP
 
@@ -51,3 +52,4 @@ modules_disabled = {
     -- "c2s"; -- Handle client connections
     -- "s2s"; -- Handle server-to-server connections
 };
+

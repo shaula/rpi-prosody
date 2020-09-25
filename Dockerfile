@@ -14,10 +14,13 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-ENV PROSODY_VERSION 0.11.2
+#https://prosody.im/downloads/source/
+ENV PROSODY_VERSION 0.11.6
 ENV PROSODY_DOWNLOAD_URL https://prosody.im/downloads/source/prosody-${PROSODY_VERSION}.tar.gz
-ENV PROSODY_DOWNLOAD_SHA1 0508cfc1c3c74a7eb8fdac2ed50435e190930f6a
+ENV PROSODY_DOWNLOAD_SHA1 3c24f3faf7735c570213da74eba6343c3afdf50d
 
+#https://luarocks.org/#quick-start
+ENV LUAROCKS_VERSION 3.3.1
 RUN buildDeps='gcc git libc6-dev libidn11-dev liblua5.2-dev libsqlite3-dev libssl-dev make unzip' \
  && set -x \
  && apt-get update && apt-get install -y $buildDeps --no-install-recommends \
@@ -35,9 +38,9 @@ RUN buildDeps='gcc git libc6-dev libidn11-dev liblua5.2-dev libsqlite3-dev libss
  \
  && mkdir /usr/src/luarocks \
  && cd /usr/src/luarocks \
- && wget https://luarocks.org/releases/luarocks-3.0.4.tar.gz \
- && tar zxpf luarocks-3.0.4.tar.gz \
- && cd luarocks-3.0.4 \
+ && wget https://luarocks.org/releases/luarocks-${LUAROCKS_VERSION}.tar.gz \
+ && tar zxpf luarocks-${LUAROCKS_VERSION}.tar.gz \
+ && cd luarocks-${LUAROCKS_VERSION} \
  && ./configure \
  && sudo make bootstrap \
  && cd / && rm -r /usr/src/luarocks \
@@ -70,7 +73,8 @@ RUN docker-prosody-module-install \
         csi `# client state indication (XEP-0352)` \
         e2e_policy `# require end-2-end encryption` \
         filter_chatstates `# disable "X is typing" type messages` \
-        http_upload `# file sharing (XEP-0363)` \
+        http_upload `# easy file sharing (XEP-0363)` \
+        http_upload_external `# advanced file sharing (XEP-0363)` \
         smacks `# stream management (XEP-0198)` \
         throttle_presence `# presence throttling in CSI`
 
